@@ -13,14 +13,8 @@ app.set('view engine','hbs');
 
 //public is a static folder
 app.use(express.static(__dirname + '/public'));
-
-// home page router
-app.get('/', function (req, res) {
-    res.render('home',{
-        title:'Home Page'
-    });
-});
-
+var routes_index = require('./routes/index.js')(app);
+var routes_mdetail = require('./routes/mdetail.js')(app);
 
 app.listen(app.get('port'), function () {
     console.log( 'The server is running, port: '+app.get('port') );
