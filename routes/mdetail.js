@@ -1,5 +1,7 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('/movie_grail.db');
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 module.exports = function (app) {
     app.get('/mdetail', function (req, res) {
@@ -38,6 +40,25 @@ module.exports = function (app) {
                 });*/
             });
         }
+    });
+
+    app.post('/mdetail/addcomment',urlencodedParser, function (req, res) {
+        console.log(req.body);
+        var isAnonymous = req.body.isAnonymous;
+        var movie_id = req.body.movie_id;
+        var comment_content = req.body.comment_content;
+
+        var db = new sqlite3.Database('/movie_grail.db');
+        db.run("INSERT INTO movie_comment (movie_id,comment_con,is_anonymous) VALUES (?,?,?)",
+            movie_id,comment_content,isAnonymous,function(err){
+            if(err){
+                console.log(err);
+                res.json({"success": "false"});
+            }else{
+                res.json({"success": "true"});
+            }
+        });
+
     });
 }
 

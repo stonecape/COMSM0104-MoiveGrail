@@ -1,8 +1,45 @@
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#confirmSubmit").click(function(){
+
+            var comment_content = $("#addNewComment").val();
+            if(comment_content.length < 1) {
+                alert("Write your ideas and submit again.");
+                return;
+            }
+            var isAnonymous;
+            if($("#isAnonymous").is(':checked')) {
+                isAnonymous = 1;
+            } else {
+                isAnonymous = 0;
+            }
+            var movie_id = $("#movie_id").val();
+
+            var result;
+            $.ajax({
+                type: "POST",
+                url : "/mdetail/addcomment",
+                dataType: 'json',
+                async : false,
+                data:{"isAnonymous":isAnonymous, "movie_id":movie_id, "comment_content":comment_content},
+                success: function(data) {
+                    result = data;
+                }
+            });
+            if(result.success == true) {
+                alert("添加成功");
+                location.reload();
+            } else {
+                alert("添加失败");
+            }
+
+        });
+    });
+</script>
 <div class="container">
     <hr>
     <hr>
     <div class="row row-offcanvas row-offcanvas-right">
-
         <div class="col-xs-12 col-sm-9">
 
             <div class="row">
@@ -28,8 +65,24 @@
             </div><!--/row-->
         </div><!--/.col-xs-12.col-sm-9-->
     </div><!--/row-->
-
     <hr>
+    <form>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="5" placeholder="Write Your Ideas" id="addNewComment"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-10">
+                <input type="checkbox" id="isAnonymous" value="1">Anonymous?
+                <button type="button" id="confirmSubmit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
 
-
+    </form>
 </div><!--/.container-->
+
+<div class="hidden">
+    <input id="movie_id" value="{{id}}" />
+</div>
+
