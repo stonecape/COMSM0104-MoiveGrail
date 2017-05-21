@@ -1,6 +1,7 @@
 var sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var db = new sqlite3.Database('/movie_g.db');
 
 module.exports = function (app) {
     app.get('/mdetail', function (req, res) {
@@ -9,22 +10,43 @@ module.exports = function (app) {
         if(isEmptyObject(movie_id)) {
             res.render('home');
         } else {
-            var db = new sqlite3.Database('/movie_g.db',function() {
-                var select_query = "select movie_id AS id, introduction AS intro, year, title, director, " +
-                    "writers,stars from movie_detail where movie_id = ";
-                select_query = select_query.concat(movie_id);
-                console.log(select_query);
 
-                db.each(select_query, function(err, row) {
+            var select_mdetail_query = "SELECT movie_id AS id, introduction AS intro, year, title, director, " +
+                "writers,stars from movie_detail where movie_id = ";
+            select_mdetail_query = select_mdetail_query.concat(movie_id);
+            console.log("select_mdetail_query->",select_mdetail_query);
+
+            db.each(select_mdetail_query, function(err, row) {
+                var mdetail_result = {};
+                if(!err) {
                     console.log(JSON.stringify(row));
-                    if(!err) {
-                        res.render('mdetail', { 'title': row.title,'introduction' : row.intro,
-                        'id':row.id, 'year':row.year, 'director': row.director, 'writers':row.writers,
-                        'stars':row.stars});
-                    } else {
-                        res.render('home');
-                    }
-                });
+                    mdetail_result['title'] = row.title;
+                    mdetail_result['introduction'] = row.intro;
+                    mdetail_result['id'] = row.id;
+                    mdetail_result['year'] = row.year;
+                    mdetail_result['director'] = row.director;
+                    mdetail_result['writers'] = row.writers;
+                    mdetail_result['stars'] = row.stars;
+
+
+                    var select_comment_query = "SELECT * from movie_comment where movie_id = ";
+                    select_comment_query = select_comment_query.concat(movie_id);
+                    console.log("select_comment_query->",select_comment_query);
+
+                    db.all(select_comment_query, function(err, qres) {+
+                        console.log("qres->",qres);
+                        console.log("mdetail_result->",JSON.stringify(mdetail_result));
+                        res.render('mdetail', {'movie_data':mdetail_result,
+                            'comment_data':qres});
+                    });
+                } else {
+                    res.render('home');
+                }
+            });
+
+
+
+
                /*db.all(select_query,function(err,qres){
                     if(!err) {
                         var moviedata = JSON.stringify(qres);
@@ -37,7 +59,8 @@ module.exports = function (app) {
 
                     }
                 });*/
-            });
+
+
         }
     });
 
