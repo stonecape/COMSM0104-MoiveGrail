@@ -26,11 +26,12 @@
                     result = data;
                 }
             });
-            if(result.success == true) {
-                alert("添加成功");
+            alert(result);
+            if(result == true) {
+                alert("Comment Submit Successfully");
                 location.reload();
             } else {
-                alert("添加失败");
+                alert("Fail to Submit Comment");
             }
 
         });

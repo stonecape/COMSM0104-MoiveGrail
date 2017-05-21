@@ -1,5 +1,4 @@
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('/movie_grail.db');
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -10,7 +9,7 @@ module.exports = function (app) {
         if(isEmptyObject(movie_id)) {
             res.render('home');
         } else {
-            var db = new sqlite3.Database('/movie_grail.db',function() {
+            var db = new sqlite3.Database('/movie_g.db',function() {
                 var select_query = "select movie_id AS id, introduction AS intro, year, title, director, " +
                     "writers,stars from movie_detail where movie_id = ";
                 select_query = select_query.concat(movie_id);
@@ -48,14 +47,14 @@ module.exports = function (app) {
         var movie_id = req.body.movie_id;
         var comment_content = req.body.comment_content;
 
-        var db = new sqlite3.Database('/movie_grail.db');
-        db.run("INSERT INTO movie_comment (movie_id,comment_con,is_anonymous) VALUES (?,?,?)",
-            movie_id,comment_content,isAnonymous,function(err){
+        var db = new sqlite3.Database('/movie_g.db');
+        db.run("INSERT INTO movie_comment(is_anonymous,movie_id,comment_con) VALUES (?,?,?)",
+            isAnonymous,movie_id,comment_content,function(err){
             if(err){
                 console.log(err);
-                res.json({"success": "false"});
+                res.send("false");
             }else{
-                res.json({"success": "true"});
+                res.send("true");
             }
         });
 
