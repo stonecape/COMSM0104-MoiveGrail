@@ -1,7 +1,7 @@
 var sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
-var db = new sqlite3.Database('/movie_g.db');
+var db = new sqlite3.Database('movie_g.db');
 
 module.exports = function (app) {
     app.get('/mdetail', function (req, res) {
@@ -33,7 +33,7 @@ module.exports = function (app) {
                     select_comment_query = select_comment_query.concat(movie_id);
                     console.log("select_comment_query->",select_comment_query);
 
-                    db.all(select_comment_query, function(err, qres) {+
+                    db.all(select_comment_query, function(err, qres) {
                         console.log("qres->",qres);
                         console.log("mdetail_result->",JSON.stringify(mdetail_result));
                         res.render('mdetail', {'movie_data':mdetail_result,
@@ -70,7 +70,6 @@ module.exports = function (app) {
         var movie_id = req.body.movie_id;
         var comment_content = req.body.comment_content;
 
-        var db = new sqlite3.Database('/movie_g.db');
         db.run("INSERT INTO movie_comment(is_anonymous,movie_id,comment_con) VALUES (?,?,?)",
             isAnonymous,movie_id,comment_content,function(err){
             if(err){

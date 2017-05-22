@@ -1,0 +1,93 @@
+<link href="/css/signin.css" rel="stylesheet">
+
+<script type="text/javascript">
+
+    function emptyPop() {
+        $('#inputPasswordPop').popover('destroy');
+        $('#inputRePasswordPop').popover('destroy');
+    }
+    function checkForm(){
+        var userName = $("#inputUserName").val();
+        var password = $("#inputPassword").val();
+        var repassword = $("#inputRePassword").val();
+
+        if(userName.length <= 0) {
+            $('#inputUserNamePop').popover({title: "Woops!", content: "Please type your username."});
+            $('#inputUserNamePop').popover('show');
+            return false;
+        }
+
+        if(password != repassword) {
+            $('#inputRePasswordPop').popover({title: "Woops!", content: "Please retype your password correctly."});
+            $('#inputRePasswordPop').popover('show');
+            return false;
+        }
+
+        if(password.length < 6 || password.length > 12) {
+            $('#inputPasswordPop').popover({title: "Woops!", content: "You need to type passwords between 6 and 12 characters."});
+            $('#inputPasswordPop').popover('show');
+            return false;
+        }
+
+    }
+
+    function checkUserName() {
+        $('#inputUserNamePop').popover('destroy');
+        var userName = $("#inputUserName").val();
+        var result;
+        if(userName.length > 0) {
+            $.ajax({
+                type : "POST",
+                url : "/signup/checkusername",
+                dataType: 'text',
+                data : {"userName":userName },
+                async : false,
+                success : function(data){
+                    result = data;
+                }
+            });
+            if(result == false) {
+
+                $('#inputUserNamePop').popover({title: "Woops!", content: "This username has been registered. Please type another one."});
+                $('#inputUserNamePop').popover('show');
+            }
+
+        }
+    }
+</script>
+<div class="container">
+    <form class="form-signin" id="signupForm" method="post" onsubmit="checkForm()" action="/signup/submitsignup" >
+        <h2 class="form-signin-heading">Welcome to Join Us</h2>
+        <label for="inputUserName" class="sr-only">UserName</label>
+        <a href="#" title="" id="inputUserNamePop" data-toggle="popover" data-trigger="focus"
+           data-content="">
+        <input type="text" id="inputUserName" name="userName" class="form-control" placeholder="UserName"
+               onBlur="javascript:checkUserName()" >
+        </a>
+
+        <label for="emailAdd" class="sr-only">Email</label>
+
+            <input type="email" id="emailAdd" name="email" class="form-control" placeholder="Email" required>
+
+
+
+        <label for="inputPassword" class="sr-only">Password(6-12 characters)</label>
+        <a href="#" title="" id="inputPasswordPop" data-toggle="popover" data-trigger="focus"
+           data-content="">
+        <input type="password" id="inputPassword" name="password"
+               onBlur="javascript:emptyPop()"
+               class="form-control" placeholder="Password(6-12 characters)" required>
+        </a>
+
+        <label for="inputRePassword" class="sr-only">Retype your password</label>
+        <a href="#" title="" id="inputRePasswordPop" data-toggle="popover" data-trigger="focus"
+           data-content="">
+        <input type="password" id="inputRePassword" name="rePassword"
+               onBlur="javascript:emptyPop()"
+               class="form-control" placeholder="Retype your password" required>
+        </a>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="submitFormBtn">Register</button>
+    </form>
+
+</div>

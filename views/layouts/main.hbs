@@ -7,6 +7,30 @@
     <script src="/js/jquery-1.9.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <title>Movie Grail</title>
+
+    <script type="text/javascript">
+        $(function(){
+            var result;
+            $.ajax({
+                type: "GET",
+                url : "/login/getcookie",
+                dataType: 'text',
+                async : false,
+                data:{},
+                success: function(data) {
+                    result = data;
+                }
+            });
+            if(result) {
+                $('#unlog_login_btn').hide();
+                $('#unlog_join_btn').hide();
+                $('#display_username').val(result);
+            } else {
+                $('#log_display').hide();
+                $('#logout_btn').hide();
+            }
+        });
+    </script>
 </head>
 <body>
 
@@ -26,8 +50,11 @@
                 <div class="form-group">
                     <input type="text" placeholder="Search MovieGrail" class="form-control">
                 </div>
-                <button type="submit" class="btn btn-success">Sign In</button>
-                <button type="submit" class="btn btn-primary">Join</button>
+                
+                <button type="button" class="btn btn-default" id="logout_btn" onclick="javascript:jumptoLogout()">Logout</button>
+
+                <button type="button" id="unlog_login_btn" class="btn btn-success" onclick="javascript:window.location.href='/login'">Sign In</button>
+                <button type="button" id="unlog_join_btn" class="btn btn-primary" onclick="javascript:window.location.href='/signuppage'">Join</button>
             </form>
 
         </div><!--/.navbar-collapse -->
