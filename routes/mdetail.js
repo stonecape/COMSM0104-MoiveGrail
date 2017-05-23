@@ -29,8 +29,11 @@ module.exports = function (app) {
                     mdetail_result['stars'] = row.stars;
 
 
-                    var select_comment_query = "SELECT * from movie_comment where movie_id = ";
-                    select_comment_query = select_comment_query.concat(movie_id);
+                    var select_comment_query = "SELECT movie_comment.comment_id, movie_comment.user_id," +
+                        "movie_comment.comment_con, movie_comment.like_num, movie_comment.rank, movie_comment.is_anonymous," +
+                        "user_info.username from movie_comment  INNER JOIN user_info ON " +
+                        "movie_comment.user_id=user_info.user_id where movie_id = ";
+                    select_comment_query = select_comment_query.concat(movie_id).concat(" ORDER BY comment_id desc");
                     console.log("select_comment_query->",select_comment_query);
 
                     db.all(select_comment_query, function(err, qres) {
@@ -40,6 +43,7 @@ module.exports = function (app) {
                             'comment_data':qres});
                     });
                 } else {
+                    console.log("err->",err);
                     res.render('home');
                 }
             });
@@ -66,19 +70,27 @@ module.exports = function (app) {
 
     app.post('/mdetail/addcomment',urlencodedParser, function (req, res) {
         console.log(req.body);
-        var isAnonymous = req.body.isAnonymous;
-        var movie_id = req.body.movie_id;
-        var comment_content = req.body.comment_content;
+        if(req.cookies.username) {
+            var isAnonymous = req.body.isAnonymous;
+            var movie_id = req.body.movie_id;
+            var comment_content = req.body.comment_content;
+            var rank = req.body.rank;
+            var userid = req.cookies.userid;
 
-        db.run("INSERT INTO movie_comment(is_anonymous,movie_id,comment_con) VALUES (?,?,?)",
-            isAnonymous,movie_id,comment_content,function(err){
-            if(err){
-                console.log(err);
-                res.send("false");
-            }else{
-                res.send("true");
-            }
-        });
+            db.run("INSERT INTO movie_comment(user_id, is_anonymous,movie_id,comment_con,rank) VALUES (?,?,?,?,?)",
+                userid,isAnonymous,movie_id,comment_content,rank,function(err){
+                    if(err){
+                        console.log(err);
+                        res.send(JSON.stringify({ result: false, detail: "database error" }));
+                    }else{
+                        res.send(JSON.stringify({ result: true}));
+                    }
+                });
+        } else {
+            console.log("No log in! when add comment")
+            res.send(JSON.stringify({ result: false, detail: "Please Log In First." }));
+        }
+
 
     });
 }

@@ -6,6 +6,7 @@ var crypto = require('crypto');
 var dateFormat = require('dateformat');
 var now = new Date();
 
+
 module.exports = function (app) {
     // to page sign up
     app.get('/signuppage', function (req, res) {
@@ -15,23 +16,13 @@ module.exports = function (app) {
     app.post('/signup/checkusername',urlencodedParser, function (req, res) {
         console.log(req.body);
         var username = req.body.userName;
-
-        db.serialize(function() {
-            var stmt = db.prepare("SELECT * FROM user_info WHERE username = '"+username+"'");
-            stmt.get(function(err,row){
-                if(err) {
-                    console.log("err->",err);
-                    res.send("false");
-                } else {
-                    console.log("row->",row);
-                    if(row == undefined) {
-                        res.send("true");
-                    } else {
-                        res.send("false");
-                    }
-                }
-            });
-            stmt.finalize();
+        checkUserNameCanBeRegistered(username, function(qes) {
+            console.log("qes-",qes);
+            if(qes) {
+                res.send("true");
+            } else {
+                res.send("false");
+            }
         });
 
     });
@@ -43,26 +34,36 @@ module.exports = function (app) {
         var repassword = req.body.rePassword.trim();
         var email = req.body.email.trim();
 
-        if(password != repassword) {
+        if(password !== repassword || password.length < 6 ||  password.length > 12) {
             console.log("password != repassword");
-            res.send("false");
-        } else {
-            var md5 = crypto.createHash('md5');
-            var passwordmd5 = md5.update(password).digest('base64');
-            console.log("passwordmd5->",passwordmd5);
+            res.render("register_result",
+                {'result':"Woops!",'detail':"Please type your password correctly. Please try again later."});
 
-            db.run("INSERT INTO user_info(username,password,email,create_time,state) VALUES (?,?,?,?,?)",
-                username,passwordmd5,email, dateFormat(now, "isoDateTime"),1,function(err){
-                    if(err){
-                        console.log(err);
-                        res.render("register_result",
-                            {'result':"Woops!",'detail':"There is some technical problems. Please try again later."});
-                    }else{
-                        res.render("register_result",
-                            {'result':"Welcome to Join in Movie Grail"});
-                    }
-                });
         }
+        checkUserNameCanBeRegistered(username, function(qes) {
+            console.log("qes-",qes);
+            if(res) {
+                var md5 = crypto.createHash('md5');
+                var passwordmd5 = md5.update(password).digest('base64');
+                console.log("passwordmd5->",passwordmd5);
+
+                db.run("INSERT INTO user_info(username,password,email,create_time,state) VALUES (?,?,?,?,?)",
+                    username,passwordmd5,email, dateFormat(now, "isoDateTime"),1,function(err){
+                        if(err){
+                            console.log(err);
+                            res.render("register_result",
+                                {'result':"Woops!",'detail':"There is some technical problems. Please try again later."});
+                        }else{
+                            res.render("register_result",
+                                {'result':"Welcome to Join in Movie Grail"});
+                        }
+                    });
+            } else {
+                console.log("username has been registered");
+                res.render("register_result",
+                    {'result':"Woops!",'detail':"The username has been registered. Please try again later."});
+            }
+        });
     });
     // to page log in
     app.get('/login', function (req, res) {
@@ -78,6 +79,27 @@ module.exports = function (app) {
         } else {
             res.send("");
         }
+    });
+
+    // to checkIsLogin
+    app.get('/login/checkIsLogin', function (req, res) {
+        console.log("/login/checkIsLogin");
+        if (req.cookies.username) {
+            console.log(req.cookies);
+            res.send("true");
+        } else {
+            res.send("false");
+        }
+    });
+    // logout
+    app.get('/logout',urlencodedParser, function (req, res) {
+        if(req.cookies.username) {
+            res.clearCookie("username");
+        }
+        if(req.cookies.userid) {
+            res.clearCookie("userid");
+        }
+        res.send("true");
     });
     // submit log in ajax
     app.post('/login/submit',urlencodedParser, function (req, res) {
@@ -109,6 +131,7 @@ module.exports = function (app) {
                         res.send("false");
                     } else {
                         res.cookie('username', username, {maxAge: 7200 * 1000});
+                        res.cookie('userid', row.user_id, {maxAge: 7200 * 1000});
                         res.send("true");
                     }
                 }
@@ -118,3 +141,25 @@ module.exports = function (app) {
 
     });
 };
+
+// true: the username can be registered
+function checkUserNameCanBeRegistered(userName, callback) {
+    console.log("enter checkUserNameCanBeRegistered");
+    db.serialize(function() {
+        var stmt = db.prepare("SELECT * FROM user_info WHERE username = '"+userName+"'");
+        stmt.get(function(err,row){
+            if(err) {
+                console.log("database error->",err)
+                callback(false);
+            } else {
+                console.log("row->",row);
+                if(row == undefined) {
+                    callback(true);
+                } else {
+                    callback(false);
+                }
+            }
+        });
+        stmt.finalize();
+    });
+}

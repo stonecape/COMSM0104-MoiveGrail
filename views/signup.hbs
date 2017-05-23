@@ -17,17 +17,30 @@
             return false;
         }
 
-        if(password != repassword) {
-            $('#inputRePasswordPop').popover({title: "Woops!", content: "Please retype your password correctly."});
-            $('#inputRePasswordPop').popover('show');
-            return false;
+        if(checkUserName()) {
+            // check whether the username has been registered
+            // true: hasn't been registered
+            if(password !== repassword) {
+                $('#inputRePasswordPop').popover({title: "Woops!", content: "Please retype your password correctly."});
+                $('#inputRePasswordPop').popover('show');
+                return false;
+            }
+
+            if(password.length < 6) {
+                $('#inputPasswordPop').popover({title: "Woops!", content: "You need to type passwords between 6 and 12 characters."});
+                $('#inputPasswordPop').popover('show');
+                return false;
+            }
+
+            if(password.length > 12) {
+                $('#inputPasswordPop').popover({title: "Woops!", content: "You need to type passwords between 6 and 12 characters."});
+                $('#inputPasswordPop').popover('show');
+                return false;
+            }
+            return true;
         }
 
-        if(password.length < 6 || password.length > 12) {
-            $('#inputPasswordPop').popover({title: "Woops!", content: "You need to type passwords between 6 and 12 characters."});
-            $('#inputPasswordPop').popover('show');
-            return false;
-        }
+        return false;
 
     }
 
@@ -46,17 +59,20 @@
                     result = data;
                 }
             });
-            if(result == false) {
+            if(result === "false") {
 
                 $('#inputUserNamePop').popover({title: "Woops!", content: "This username has been registered. Please type another one."});
                 $('#inputUserNamePop').popover('show');
+                return false;
+            } else {
+                return true;
             }
 
         }
     }
 </script>
 <div class="container">
-    <form class="form-signin" id="signupForm" method="post" onsubmit="checkForm()" action="/signup/submitsignup" >
+    <form class="form-signin" id="signupForm" method="post" onsubmit="return checkForm()" action="/signup/submitsignup" >
         <h2 class="form-signin-heading">Welcome to Join Us</h2>
         <label for="inputUserName" class="sr-only">UserName</label>
         <a href="#" title="" id="inputUserNamePop" data-toggle="popover" data-trigger="focus"

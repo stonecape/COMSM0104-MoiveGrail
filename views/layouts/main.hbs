@@ -9,6 +9,22 @@
     <title>Movie Grail</title>
 
     <script type="text/javascript">
+        function logoutFuc() {
+            var result;
+            $.ajax({
+                type: "GET",
+                url : "/logout",
+                dataType: 'text',
+                async : false,
+                data:{},
+                success: function(data) {
+                    result = data;
+                }
+            });
+            if(result === "true") {
+                location.reload();
+            }
+        }
         $(function(){
             var result;
             $.ajax({
@@ -43,15 +59,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Movie Grail</a>
+            <a href="/"><img id="logo" src="/images/LOGO.svg" alt="Movie Grail" ></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1.11111px;">
             <form class="navbar-form navbar-right">
                 <div class="form-group">
                     <input type="text" placeholder="Search MovieGrail" class="form-control">
                 </div>
-                
-                <button type="button" class="btn btn-default" id="logout_btn" onclick="javascript:jumptoLogout()">Logout</button>
+
+                <button type="button" class="btn btn-default" id="logout_btn" onclick="javascript:logoutFuc()">Logout</button>
 
                 <button type="button" id="unlog_login_btn" class="btn btn-success" onclick="javascript:window.location.href='/login'">Sign In</button>
                 <button type="button" id="unlog_join_btn" class="btn btn-primary" onclick="javascript:window.location.href='/signuppage'">Join</button>

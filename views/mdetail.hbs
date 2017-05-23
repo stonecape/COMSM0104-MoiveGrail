@@ -1,7 +1,34 @@
+<link href="/css/heart.css" rel="stylesheet">
+<link href="/css/comment.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+<script src="/js/heart.js"></script>
 <script type="text/javascript">
+    function checkIsLogin() {
+        $('#addNewCommentPop').popover('destroy');
+        var isLoginResult;
+        $.ajax({
+            type: "GET",
+            url : "/login/checkIsLogin",
+            dataType: 'text',
+            async : false,
+            success: function(data) {
+                isLoginResult = data;
+            }
+        });
+        if(isLoginResult === "false") {
+            $('#addNewCommentPop').popover({title: "Woops!", content: "Please Log In First."});
+            $('#addNewCommentPop').popover('show');
+            return false;
+        }
+        return true;
+    }
     $(document).ready(function(){
-
+        $('#addNewCommentPop').popover('destroy');
         $("#confirmSubmit").click(function(){
+
+            if(!checkIsLogin()) {
+                return;
+            }
 
             var comment_content = $("#addNewComment").val();
             if(comment_content.length < 1) {
@@ -15,23 +42,24 @@
                 isAnonymous = 0;
             }
             var movie_id = $("#movie_id").val();
+            var rank = $("#count").text();
 
-            var result;
+            var sresult;
             $.ajax({
                 type: "POST",
                 url : "/mdetail/addcomment",
                 dataType: 'json',
                 async : false,
-                data:{"isAnonymous":isAnonymous, "movie_id":movie_id, "comment_content":comment_content},
+                data:{"isAnonymous":isAnonymous, "movie_id":movie_id, "comment_content":comment_content, "rank":rank},
                 success: function(data) {
-                    result = data;
+                    sresult = data;
                 }
             });
-            if(result == true) {
-                alert("Comment Submit Successfully");
+            if(sresult.result === true) {
                 location.reload();
             } else {
-                alert("Fail to Submit Comment");
+                $('#addNewCommentPop').popover({title: "Woops!", content: sresult.detail});
+                $('#addNewCommentPop').popover('show');
             }
 
         });
@@ -68,35 +96,72 @@
     </div><!--/row-->
     <hr>
     <form>
-        <div class="form-group">
-            <div class="col-sm-7">
-                <textarea class="form-control" rows="5" placeholder="Write Your Ideas" id="addNewComment"></textarea>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-7">
-                <input type="checkbox" id="isAnonymous" value="1">Anonymous?
-                <button type="button" id="confirmSubmit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-
-        {{#if comment_data}}
-            {{#each comment_data}}
-                <div class="form-group">
-                    <div class="col-sm-7">
-
-                        <p><strong>**** says:</strong></p>
-                        <textarea class="form-control" rows="5"
-                                  disabled>{{comment_con}}</textarea>
+        <div class="container pb-cmnt-container" >
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="panel panel-info">
+                        <div class="panel-body">
+                            <a href="#" title="" id="addNewCommentPop" data-toggle="popover" data-trigger="focus"
+                               data-content="">
+                            <textarea placeholder="Write Your Ideas Here" onclick="javascript:checkIsLogin()" id="addNewComment" class="pb-cmnt-textarea"></textarea>
+                            </a>
+                            Rank this movie please: <span id="hearts" class="starrr" ></span><span id="count">0</span> heart(s)
+                            <input type="checkbox" id="isAnonymous" value="1">Anonymous comment?
+                            <button type="button" id="confirmSubmit" class="btn btn-primary pull-right">Submit</button>
+                        </div>
                     </div>
                 </div>
-            {{/each}}
-        {{/if}}
+            </div>
+        </div>
+       <!-- <div class="form-group">
+            <div class="col-sm-7">
+                <a href="#" title="" id="addNewCommentPop" data-toggle="popover" data-trigger="focus"
+                   data-content="">
+                <textarea class="form-control" rows="5" placeholder="Write Your Ideas" id="addNewComment"
+                          onclick="javascript:checkIsLogin()"></textarea>
+                </a>
+            </div>
+        </div>-->
 
+
+        <div class="container">
+            <div class="row">
+                {{#if comment_data}}
+                    {{#each comment_data}}
+                            <div class="col-sm-7">
+                                <div class="panel panel-white post panel-shadow">
+                                    <div class="post-heading">
+                                        <div class="pull-left image">
+                                            <img src="http://bootdey.com/img/Content/user_1.jpg" class="img-circle avatar" alt="user profile image">
+                                        </div>
+                                        <div class="pull-left meta">
+                                            <div class="title h5">
+                                                <a href="#"><b>{{username}}</b></a>
+                                                made a post.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="post-description">
+                                        <p>{{comment_con}}</p>
+                                        <div class="stats">
+                                            <a href="#" class="btn btn-default stat-item">
+                                                <i class="fa fa-thumbs-up icon"></i>2
+                                            </a>
+                                            <a href="#" class="btn btn-default stat-item">
+                                                <i class="fa fa-thumbs-down icon"></i>12
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
     </form>
 </div><!--/.container-->
 
 <div class="hidden">
-    <input id="movie_id" value="{{id}}" />
+    <input id="movie_id" value="{{movie_data.id}}" />
 </div>
 
