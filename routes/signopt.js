@@ -71,9 +71,12 @@ module.exports = function (app) {
 
     // to cookie username
     app.get('/login/getcookie', function (req, res) {
+        console.log("/login/getcookie");
         if (req.cookies.username) {
             console.log(req.cookies);
             res.send(req.cookies.username);
+        } else {
+            res.send("");
         }
     });
     // submit log in ajax
