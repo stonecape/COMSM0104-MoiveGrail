@@ -13,7 +13,7 @@
    height="19.913866mm"
    width="115.9801mm"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="LOGO.svg">
+   sodipodi:docname="LOGO_blue.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -31,9 +31,9 @@
      fit-margin-left="0"
      fit-margin-right="0"
      fit-margin-bottom="0"
-     inkscape:zoom="2.6003839"
-     inkscape:cx="175.86048"
-     inkscape:cy="-13.669907"
+     inkscape:zoom="0.65009598"
+     inkscape:cx="151.02634"
+     inkscape:cy="-26.007539"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -354,13 +354,13 @@
      inkscape:connector-curvature="0" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Lao MN';-inkscape-font-specification:'Lao MN Light';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;"
+     style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Lao MN';-inkscape-font-specification:'Lao MN Light';letter-spacing:0px;word-spacing:0px;fill:#67caff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      id="text5962"
      y="54.477196"
      x="146.53905"
      sodipodi:linespacing="125%"><tspan
        id="tspan5964"
-       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:'Lao MN';-inkscape-font-specification:'Lao MN Light';fill:#ffffff;fill-opacity:1;">MOVIE GRAIL</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:'Lao MN';-inkscape-font-specification:'Lao MN Light';fill:#67caff;fill-opacity:1">MOVIE GRAIL</tspan></text>
   <ellipse
      style="opacity:1;fill:#ffffff;fill-opacity:0.47552448;fill-rule:nonzero;stroke:none;stroke-opacity:1"
      id="path6045"

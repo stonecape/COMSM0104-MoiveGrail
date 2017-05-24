@@ -120,16 +120,16 @@
                 <div class="col-xs-6 col-lg-4">
                     <h3>Average Rank</h3>
                     <p>{{avgrank.avg_rank}}</p>
-                    <!--<span id="hearts" >
-                    {{#times avgrank}}
+                    <span id="infoHearts" >
+                    {{#times avgrank 0}}
                         <span id="rankhearts"
                               class="glyphicon .glyphicon-heart-empty glyphicon-heart"></span>
                     {{/times}}
-                    {{#times empty_heart_num}}
+                    {{#times 5 avgrank}}
                         <span id="rankhearts"
                               class="glyphicon .glyphicon-heart-empty glyphicon-heart-empty"></span>
                     {{/times}}
-                    </span>-->
+                    </span>
                 </div><!--/.col-xs-6.col-lg-4-->
 
             </div><!--/row-->
@@ -177,10 +177,19 @@
                                         </div>
                                         <div class="pull-left meta">
                                             <div class="title h5">
-                                                <a href="#"><b>{{username}}</b></a>
+                                                <a href="#"><b>
+                                                    {{#ifCond is_anonymous 1}}
+                                                        Anonymous User
+                                                    {{else}}
+                                                        {{username}}
+                                                    {{/ifCond}}
+                                                    </b></a>
                                                 made a post and ranked:
-                                                {{#times rank}}
+                                                {{#times rank 0}}
                                                     <span class="glyphicon .glyphicon-heart-empty glyphicon-heart"></span>
+                                                {{/times}}
+                                                {{#times 5 rank}}
+                                                    <span class="glyphicon .glyphicon-heart-empty glyphicon-heart-empty"></span>
                                                 {{/times}}
                                             </div>
                                         </div>

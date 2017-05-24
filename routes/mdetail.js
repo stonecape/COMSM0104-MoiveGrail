@@ -1,6 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
-var urlencodedParser = bodyParser.urlencoded({extended: false})
+var urlencodedParser = bodyParser.urlencoded({extended: false});
 var db = new sqlite3.Database('movie_g.db');
 var mean = require( 'compute-mean' );
 
@@ -45,18 +45,23 @@ module.exports = function (app) {
                         stmt.get(function(err,avgrow){
                             console.log("avg(rank)->",avgrow.avg_rank);
                             var round_avgrank = Math.round(avgrow.avg_rank);
-                            var empty_heart_num = 5-round_avgrank;
                             res.render('mdetail', {
                                 'movie_data': mdetail_result,
                                 'comment_data': qres,
                                 'avgrank':round_avgrank,
-                                'empty_heart_num':empty_heart_num,
                                 helpers: {
-                                    times: function (n, block) {
+                                    times: function (v1,v2, block) {
+                                        n = v1 - v2;
                                         var accum = '';
                                         for (var i = 0; i < n; ++i)
                                             accum += block.fn(i);
                                         return accum;
+                                    },
+                                    ifCond: function (v1, v2, options) {
+                                        if(v1 === v2) {
+                                            return options.fn(this);
+                                        }
+                                        return options.inverse(this);
                                     }
                                 }
                             });
