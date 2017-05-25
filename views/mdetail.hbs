@@ -63,7 +63,8 @@
 
             var comment_content = $("#addNewComment").val();
             if(comment_content.length < 1) {
-                alert("Write your ideas and submit again.");
+                $('#addNewCommentPop').popover({title: "Woops!", content: "Write your ideas and submit again."});
+                $('#addNewCommentPop').popover('show');
                 return;
             }
             var isAnonymous;
@@ -74,6 +75,11 @@
             }
             var movie_id = $("#movie_id").val();
             var rank = $("#count").text();
+            if(rank < 1) {
+                $('#addNewCommentPop').popover({title: "Woops!", content: "Don't forget rank this movie, please."});
+                $('#addNewCommentPop').popover('show');
+                return;
+            }
 
             var sresult;
             $.ajax({
@@ -111,9 +117,9 @@
                 <div class="col-xs-6 col-lg-4">
                     <h3 style="margin-top: 0px">Introduction</h3>
                     <p>{{movie_data.introduction}}</p>
-                    <p><strong>director: </strong>{{movie_data.director}}</p>
-                    <p><strong>writers: </strong>{{movie_data.writers}}</p>
-                    <p><strong>stars: </strong>{{movie_data.stars}}</p>
+                    <p><strong>Director: </strong>{{movie_data.director}}</p>
+                    <p><strong>Writers: </strong>{{movie_data.writers}}</p>
+                    <p><strong>Stars: </strong>{{movie_data.stars}}</p>
 
                 </div><!--/.col-xs-6.col-lg-4-->
                 <div class="col-xs-6 col-lg-4">
