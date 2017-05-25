@@ -17,9 +17,10 @@ module.exports = function (app) {
             select_mdetail_query = select_mdetail_query.concat(movie_id);
             console.log("select_mdetail_query->", select_mdetail_query);
 
-            db.each(select_mdetail_query, function (err, row) {
+            db.get(select_mdetail_query, function (err, row) {
                 var mdetail_result = {};
-                if (!err) {
+                console.log("mdetail-row->", row);
+                if (!err && row) {
                     console.log(JSON.stringify(row));
                     mdetail_result['title'] = row.title;
                     mdetail_result['introduction'] = row.intro;

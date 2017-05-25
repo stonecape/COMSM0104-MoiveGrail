@@ -7,34 +7,40 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Homemade+Apple" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Acme|Montserrat" rel="stylesheet">
     <script src="/js/jquery-1.9.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <title>Movie Grail</title>
 
     <script type="text/javascript">
-        function doSearch(){
-            var res;
-            var search_text = $("#top_search_box").val();
-            $.ajax({
-                type: "GET",
-                url : "/search",
-                dataType: 'json',
-                async : false,
-                data:{"search_text":search_text},
-                success: function(data) {
-                    res = data;
-                }
-            });
-            if(res.result) {
-                if(res.detail) {
-                    window.location.href = "/mdetail?id="+res.detail;
-                } else {
-                    $("#top_search_box").val("");
-                }
+        function doSearch(loc) {
+            var search_text
+            if(loc === 'top') {
+                search_text = $("#top_search_box").val();
+            } else {
+                search_text = $("#carousel-search-box").val();
+            }
+
+            if(search_text.length > 0){
+                $.ajax({
+                    type: "GET",
+                    url : "/search",
+                    dataType: 'json',
+                    async : false,
+                    data:{"search_text":search_text},
+                    success: function(data) {
+                        if(data.result && data.detail) {
+                            window.location.href="/mdetail?id="+data.detail;
+                        } else {
+                            $("#top_search_box").val("");
+                            $("#carousel-search-box").val("");
+                        }
+                    }
+                });
             }
         }
-
         function submitLogInForm() {
             $('#inputUserNamePop').popover('destroy');
             $('#inputPasswordPop').popover('destroy');
@@ -106,9 +112,17 @@
                 $('#unlog_join_btn').hide();
                 $('#logout_btn').html(result+" logout");
             } else {
-/*                $('#log_display').hide();*/
                 $('#logout_btn').hide();
             }
+
+           /* /!*bind key press to top search*!/
+            $('#top_search_box').bind('keypress',function(event){
+                if(event.keyCode == "13")
+                {
+
+
+                }
+            });*/
         });
     </script>
 </head>
@@ -128,8 +142,13 @@
                              onmouseout="this.src='/images/LOGO.svg'" src="/images/LOGO.svg" alt="Movie Grail"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1.11111px;">
-            <form class="navbar-form navbar-right">
-                <input type="text" id="top_search_box"  placeholder="Find your movies" class="form-control">
+            <div class="navbar-form navbar-right">
+                <div class="form-group">
+                    <input type="text" id="top_search_box"  placeholder="Search..." class="form-control">
+                    <button onclick="javascript:doSearch('top')" class="search-top-button">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </div>
                 <!--<a class="not-active" id="log_display" href="#"></a>-->
                 <button type="button" class="btn btn-info" id="logout_btn" onclick="javascript:logoutFuc()">
                 </button>
@@ -141,7 +160,7 @@
                 <button type="button" id="unlog_join_btn" class="btn btn-primary"
                         onclick="javascript:window.location.href='/signuppage'">Join
                 </button>
-            </form>
+            </div>
 
         </div><!--/.navbar-collapse -->
     </div>

@@ -149,11 +149,11 @@ function checkUserNameCanBeRegistered(userName, callback) {
         var stmt = db.prepare("SELECT * FROM user_info WHERE username = '"+userName+"'");
         stmt.get(function(err,row){
             if(err) {
-                console.log("database error->",err)
+                console.log("database error->",err);
                 callback(false);
             } else {
                 console.log("row->",row);
-                if(row == undefined) {
+                if(row === undefined) {
                     callback(true);
                 } else {
                     callback(false);

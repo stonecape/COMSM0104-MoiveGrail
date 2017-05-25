@@ -1,3 +1,10 @@
+<script type="text/javascript">
+    function sortChange() {
+        var sort_opt = $("#sortSelect").val();
+        window.location.href="?sort_opt="+sort_opt;
+    }
+
+</script>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
@@ -24,9 +31,12 @@
                  alt="Third slide">
 
         </div>
+        <div class="big-title">
+            <h1>Love life, love movie.</h1>
+        </div>
         <div class="form-group search">
-            <input type="text" placeholder="Find your movies" class="form-control">
-            <button class="search-input-button">
+            <input type="text" id="carousel-search-box"  placeholder="Find your movies" class="form-control">
+            <button class="search-input-button" onclick="javascript:doSearch('carousel')">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
             </button>
         </div>
@@ -44,39 +54,29 @@
 
 
 <div class="container marketing">
-
+    <select id="sortSelect" class="form-control sort_select" onchange="javascript:sortChange()">
+        {{#select sort_opt}}
+            <option value="0">Newest</option>
+            <option value="1">Top rated</option>
+            <option value="2">Most commented</option>
+        {{/select}}
+    </select>
+    <hr>
     <!-- Three columns of text below the carousel -->
     <div class="row">
-        <div class="col-lg-4">
+    {{#if recommend}}
+        {{#each recommend}}
+        <div class="col-lg-4 home_movielist">
             <img class="img-circle"
-                 src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                 src="/images/movie_poster/{{movie_id}}.png"
                  alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
-                vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo
-                cursus magna.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+            <h2>{{title}}</h2>
+            <p>{{introduction}}</p>
+            <p><a class="btn btn-default" href="/mdetail?id={{movie_id}}" role="button">View details »</a></p>
         </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-            <img class="img-circle"
-                 src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                 alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
-                mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                condimentum nibh.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4">
-            <img class="img-circle"
-                 src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                 alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
-                porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
+        {{/each}}
+    {{/if}}
+
     </div><!-- /.row -->
 
 
