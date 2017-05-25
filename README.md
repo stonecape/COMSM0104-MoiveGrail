@@ -3,3 +3,4 @@ COMSM0104-WebTechnology_Porject
 
 - Please execuate `npm install` first
 - Then execuate `node index.js` in the root folder
+- Open Browser and type `localhost:3000`
