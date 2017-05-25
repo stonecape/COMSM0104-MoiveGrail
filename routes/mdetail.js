@@ -2,7 +2,6 @@ var sqlite3 = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 var db = new sqlite3.Database('movie_g.db');
-var mean = require( 'compute-mean' );
 
 module.exports = function (app) {
     app.get('/mdetail', function (req, res) {
