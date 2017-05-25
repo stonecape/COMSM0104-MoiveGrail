@@ -1,8 +1,17 @@
 <script type="text/javascript">
     function sortChange() {
         var sort_opt = $("#sortSelect").val();
-        window.location.href="?sort_opt="+sort_opt;
+        window.location.href = "?sort_opt=" + sort_opt;
     }
+
+    $(function () {
+
+        $("#carousel-search-box").bind('keypress', function (event) {
+            if (event.keyCode == "13") {
+                doSearch('carousel');
+            }
+        });
+    });
 
 </script>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -35,7 +44,7 @@
             <h1>Love life, love movie.</h1>
         </div>
         <div class="form-group search">
-            <input type="text" id="carousel-search-box"  placeholder="Find your movies" class="form-control">
+            <input type="text" id="carousel-search-box" placeholder="Find your movies" class="form-control">
             <button class="search-input-button" onclick="javascript:doSearch('carousel')">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
             </button>
@@ -64,21 +73,20 @@
     <hr>
     <!-- Three columns of text below the carousel -->
     <div class="row">
-    {{#if recommend}}
-        {{#each recommend}}
-        <div class="col-lg-4 home_movielist">
-            <img class="img-circle"
-                 src="/images/movie_poster/{{movie_id}}.png"
-                 alt="Generic placeholder image" width="140" height="140">
-            <h2>{{title}}</h2>
-            <p>{{introduction}}</p>
-            <p><a class="btn btn-default" href="/mdetail?id={{movie_id}}" role="button">View details »</a></p>
-        </div><!-- /.col-lg-4 -->
-        {{/each}}
-    {{/if}}
+        {{#if recommend}}
+            {{#each recommend}}
+                <div class="col-lg-4 home_movielist">
+                    <img class="img-circle"
+                         src="/images/movie_poster/{{movie_id}}.png"
+                         alt="Generic placeholder image" width="140" height="140">
+                    <h2>{{title}}</h2>
+                    <p>{{introduction}}</p>
+                    <p><a class="btn btn-default" href="/mdetail?id={{movie_id}}" role="button">View details »</a></p>
+                </div><!-- /.col-lg-4 -->
+            {{/each}}
+        {{/if}}
 
     </div><!-- /.row -->
-
 
 
 </div>

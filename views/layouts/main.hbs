@@ -114,14 +114,13 @@
                 $('#logout_btn').hide();
             }
 
-           /* /!*bind key press to top search*!/
-            $('#top_search_box').bind('keypress',function(event){
+
+            $("#top_search_box").bind('keypress',function(event){
                 if(event.keyCode == "13")
                 {
-
-
+                    doSearch('top');
                 }
-            });*/
+            });
         });
     </script>
 </head>
@@ -140,10 +139,11 @@
             <a href="/"><img id="logo" onmouseover="this.src='/images/LOGO_green.svg'"
                              onmouseout="this.src='/images/LOGO.svg'" src="/images/LOGO.svg" alt="Movie Grail"></a>
         </div>
+
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1.11111px;">
             <div class="navbar-form navbar-right">
                 <div class="form-group">
-                    <input type="text" id="top_search_box"  placeholder="Search..." class="form-control">
+                    <input type="text" id="top_search_box" placeholder="Search..." class="form-control">
                     <button onclick="javascript:doSearch('top')" class="search-top-button">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </button>
