@@ -18,7 +18,6 @@ module.exports = function (app) {
 
             db.get(select_mdetail_query, function (err, row) {
                 var mdetail_result = {};
-                console.log("mdetail-row->", row);
                 if (!err && row) {
                     console.log(JSON.stringify(row));
                     mdetail_result['title'] = row.title;
@@ -105,7 +104,7 @@ module.exports = function (app) {
             db.run("INSERT INTO movie_comment(user_id, is_anonymous,movie_id,comment_con,rank) VALUES (?,?,?,?,?)",
                 userid, isAnonymous, movie_id, comment_content, rank, function (err) {
                     if (err) {
-                        console.log(err);
+                        console.log("insert comment err->",err);
                         res.send(JSON.stringify({result: false, detail: "database error"}));
                     } else {
                         res.send(JSON.stringify({result: true}));
