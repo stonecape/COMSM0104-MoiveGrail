@@ -42,21 +42,21 @@
             }
         }
         function submitLogInForm() {
-            $('#inputUserNamePop').popover('destroy');
-            $('#inputPasswordPop').popover('destroy');
+            $('#login_inputUserNamePop').popover('destroy');
+            $('#login_inputPasswordPop').popover('destroy');
             $('#login_submit_btn_popover').popover('destroy');
 
-            var userName = $("#inputUserName").val();
-            var password = $("#inputPassword").val();
+            var userName = $("#login_inputUserName").val();
+            var password = $("#login_inputPassword").val();
 
             if (userName.length <= 0) {
-                $('#inputUserNamePop').popover({title: "Woops!", content: "Please type your username."});
-                $('#inputUserNamePop').popover('show');
+                $('#login_inputUserNamePop').popover({title: "Woops!", content: "Please type your username."});
+                $('#login_inputUserNamePop').popover('show');
                 return false;
             }
             if (password.length < 6 || password.length > 12) {
-                $('#inputPasswordPop').popover({title: "Woops!", content: "Please type your password correctly."});
-                $('#inputPasswordPop').popover('show');
+                $('#login_inputPasswordPop').popover({title: "Woops!", content: "Please type your password correctly."});
+                $('#login_inputPasswordPop').popover('show');
                 return false;
             }
 
@@ -64,15 +64,14 @@
             $.ajax({
                 type: "POST",
                 url : "/login/submit",
-                dataType: 'json',
+                dataType: 'text',
                 async : false,
                 data:{"userName":userName, "password":password},
                 success: function(data) {
                     result = data;
                 }
             });
-
-            if(result == true) {
+            if(result === "true") {
                 location.reload();
             } else {
                 $('#login_submit_btn_popover').popover({title: "Woops!", content: "Username or password is wrong."});
@@ -138,7 +137,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="/"><img id="logo" onmouseover="this.src='/images/LOGO_grey.svg'"
+            <a href="/"><img id="logo" onmouseover="this.src='/images/LOGO_green.svg'"
                              onmouseout="this.src='/images/LOGO.svg'" src="/images/LOGO.svg" alt="Movie Grail"></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1.11111px;">
@@ -224,7 +223,7 @@
                                         <div class="row">
                                             <div class="col-sm-12 col-md-10  col-md-offset-1 ">
                                                 <div class="form-group">
-                                                    <a href="#" title="" id="inputUserNamePop" data-toggle="popover"
+                                                    <a href="#" title="" id="login_inputUserNamePop" data-toggle="popover"
                                                        data-trigger="focus"
                                                        data-content="">
                                                     <div class="input-group">
@@ -232,7 +231,7 @@
                                                             <i class="glyphicon glyphicon-user"></i>
                                                         </span>
 
-                                                            <input class="form-control" id="inputUserName"
+                                                            <input class="form-control" id="login_inputUserName"
                                                                    placeholder="UserName" name="userName" type="text"
                                                                    autofocus>
 
@@ -240,7 +239,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group">
-                                                    <a href="#" title="" id="inputPasswordPop" data-toggle="popover"
+                                                    <a href="#" title="" id="login_inputPasswordPop" data-toggle="popover"
                                                        data-trigger="focus"
                                                        data-content="">
                                                     <div class="input-group">
@@ -248,17 +247,21 @@
                                                             <i class="glyphicon glyphicon-lock"></i>
                                                         </span>
 
-                                                            <input type="password" id="inputPassword" name="password"
+                                                            <input type="password" id="login_inputPassword" name="password"
                                                                    onBlur="javascript:emptyPop()"
                                                                    class="form-control" placeholder="Password" required>
 
                                                     </div>
                                                     </a>
                                                 </div>
-                                                <div class="form-group">
-                                                    <button class="btn btn-lg btn-primary btn-block" type="button"
-                                                            onclick="javascript:submitLogInForm()" id="submitFormBtn">Log In</button>
-                                                </div>
+                                                <a href="#" title="" id="login_submit_btn_popover" data-toggle="popover"
+                                                   data-trigger="focus"
+                                                   data-content="">
+                                                    <div class="form-group">
+                                                        <button class="btn btn-lg btn-primary btn-block" type="button"
+                                                                onclick="javascript:submitLogInForm()" id="submitFormBtn">Log In</button>
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
                                     </fieldset>

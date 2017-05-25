@@ -127,7 +127,7 @@ module.exports = function (app) {
                     res.send("false");
                 } else {
                     console.log("row->",row);
-                    if(row == undefined) {
+                    if(row === undefined) {
                         res.send("false");
                     } else {
                         res.cookie('username', username, {maxAge: 7200 * 1000});
