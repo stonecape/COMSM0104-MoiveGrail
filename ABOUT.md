@@ -69,11 +69,11 @@
 	
 	- #### **Basic techniques**
 		- Draw simple icons, fill and change colors, adjust shape and transparency.
-		- Flexibly draw Bezier curves and straight lines and edit paths by nodes.
+		- Flexibly draw **Bezier curves and straight lines** and **edit paths** by nodes.
 	- #### **Advanced techniques**
-		- Apply related Path and Text techniques to make the text "Movie Grail" follow a curve.
-		- Edit objects by grouping, rotating, flipping and aligning.
-		- Create glasses patterns that are infinitely repeated as backgrounds in our detail page.
+		- Apply related **Path and Text** techniques to make the text "Movie Grail" follow a curve.
+		- Edit objects by **grouping, rotating, flipping and aligning**.
+		- Create glasses **patterns** that are infinitely repeated as backgrounds in our detail page.
 
 6. #### Server
 	- **Express** -- Node js web application framework is used to build up this website.
