@@ -7,7 +7,7 @@
 </div>
 
 
-### How to start up **Movie Grail**?
+### How to start up Movie Grail?
 
 - Please execute `npm install` command in the root directory, and the node modules will be installed automatically.
 - Then execute `node index.js` command in the root directory.
@@ -20,12 +20,13 @@
 |:-------------:	|:---------------:	|:--------------------------------------------------------------------------------------------------------------------------------------------	|
 | HTML          	|        A        	| **Bootstrap** framework and **Handlebars** view engine are used to gengerate HTML pages.                                                             	|
 | CSS           	|        A        	| CSS is applied to some animations and decoration of our web pages.                                                                            	|
-| JS            	|        A        	| Many dynamic tips and operations are implemented by **AJAX** and JQuery.                                                                         	|
+| JS            	|        A        	| Many dynamic tips and operations are implemented by **AJAX** and jQuery.                                                                         	|
 | PNG           	|        A        	| Use sophisticated techniques of **GIMP** to create fantastic images.                                                                            	|
 | SVG           	|        A        	| Explore a wide range of techniques that **Inkscape** offers to draw vector graphics.                                                            	|
 | Server        	|        A        	| **Express** -- Node js web application framework is used to build up this website. Compatibility test and security improvement are also considered. 	|
 | Database      	|        A        	| **Sqlite3** is applied to storing the data and executing some complex queries, and **SQL injection problem** is considered in this website.          	|
-| Dynamic pages 	|        A        	| **JQuery** and Handlebars view engine is used to implement a fluent dynamic experience.                                                          	|
+| Dynamic pages 	|        A        	| **jQuery** and Handlebars view engine is used to implement a fluent dynamic experience.                                                          	|
+| Depth 	|        B        	|Design, Security and User Experience                                                          	|
 
 ### Implementation detail
 
@@ -38,26 +39,26 @@
     - Some animations (take changing buttons' color when the mouse hovers them for example) and modifying some elements' styles (like the search boxes at the top and in the home page) are implemented through css by ourselves.
 	
 3. #### JS
-	- In order to implement dynamic pages and improve the users' experience, **Jquery AJAX** is applied to our website, which can respond to users' operations without reloading the web pages.
+	- In order to implement dynamic pages and improve the users' experience, **jQuery AJAX** is applied to our website, which can respond to users' operations without jumping to new web pages.
 	- Many **Javascript** functions are implemented to provide users with a fluent experience, which could give them responses in time. For example, many friendly tips will be popped before submitting forms, and you can click the button or just type 'enter' key when searching a movie.
 	- Illegal input characters will be forbidden when submitting a comment. 
 
 4. #### PNG
 
-	##### We made the face logo by getting galaxy effect from our faces. The techniques used are presented below.
+	##### We made the face logo by getting galaxy effect from our face through GIMP. The techniques used are presented below.
 	
 	<div class="about_face">
 		<img  src="/images/frank-n.png"  width="150" height="150">
 		<img class="about_center" src="/images/ellie-n.png"  width="150" height="150">
 	</div>
 	
-	- #### **Basic techniques**	
+	- #### Basic techniques
 		- Convert images to PNG, crop images and change resolutions.
 		- Change colors by adjusting color curves, adding filters and applying color threshold.
-	- #### **Sophisticated techniques**	
+	- #### Sophisticated techniques	
 		- Flexibly **handle layers** and **transparency**, such as merge down and add Alpha channel.
 		- **Edit paths** to add galaxy effect of the regions with similar colors.
-		- Flexibly use the **tool menu** such as free selected, scale, alignment, text and blend tool (fill the image with color gradients).
+		- Flexibly use the **tool menu** such as free selected, scale, alignment, text and blend tool (fill the image with **color gradients**).
 
 5. #### SVG
 
@@ -67,10 +68,10 @@
 		<img  class="about_center" src="/images/mdetail-info-bg.png"  height="150">
 	</div>
 	
-	- #### **Basic techniques**
+	- #### Basic techniques
 		- Draw simple icons, fill and change colors, adjust shape and transparency.
 		- Flexibly draw **Bezier curves and straight lines** and **edit paths** by nodes.
-	- #### **Advanced techniques**
+	- #### Advanced techniques
 		- Apply related **Path and Text** techniques to make the text "Movie Grail" follow a curve.
 		- Edit objects by **grouping, rotating, flipping and aligning**.
 		- Create glasses **patterns** that are infinitely repeated as backgrounds in our detail page.
@@ -85,419 +86,46 @@
 	- **Sqlite3** is applied to storing the data and executing some complex queries, like `LIKE`, `JOIN` and `AVG` .
 	- In order to **prevent SQL injection**, all the parameters of CURD statements are replaced by placeholders rather than just using `concat()` to combine parameters with statements.
 	- The structure of tables is simple and clear based on some general principles (such as BCNF).
+	- All the sensitive data (passwords) will be encrypted by hash algorithm (md5 and salt).  
 
 8. #### Dynamic pages
-	- As mentioned before, **JQuery, Javascript and Handlebars** view engine are used to create a fluent dynamic experience for our users. 
-	- A lot of details have been tackled perfectly, such as different sorting order of recommended movies.
+	- As mentioned before, **jQuery, Javascript and Handlebars** view engine are used to create a fluent dynamic experience for our users. 
+	- A lot of details have been tackled perfectly, such as the different sorting order of recommended movies.
 	
+9. #### Depth
+	- #### Design
+		##### An amazing web design is our goal. We browsed a lot of well-designed web pages, which could give us more ideas. After numerous attempts to modify the style of all the elements, we produced a satisfactory result. Many techniques we have never learned are used during this progress, such as using css to implement some simple animations.
+		
+	- #### Security
+		##### Although we did not implement HTTPS, preventing SQL injection, encrypted sensitive data and the attempt at using session and cookies to store login information are considered in this website.
 	
+	- #### User Experience (Dynamic Pages)
+		##### In order to reduce the time of jumping to new web pages, most interactions between front-end and back-end are implemented by AJAX, which can provide a better user experience. Moreover, we paid more attention on tackling details, such as friendly tips and pop-ups.
+ 	
+	
+### Frameworks and Libraries
+- Node modules
+	- body-parser
+	- cookie-parser
+	- debug
+	- express
+	- express-handlebars
+	- hbs
+	- morgan
+	- serve-favicon
+	- sqlite3
+	- dateformat
+	- crypto
+	- valid-url
+	- express-session
+	- marked
+- Bootstrap
+- GoogleFonts
+- font-awesome
+- Glyphicons
+- jQuery
+
 <br/>
 
-##### [Download Report](http://localhost:3000/webtech-report.pdf)
+##### [Download this Report](http://localhost:3000/COMSM0104-report.pdf)
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
