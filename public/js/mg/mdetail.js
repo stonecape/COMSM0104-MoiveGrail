@@ -53,7 +53,7 @@ function checkIsLogin() {
     return true;
 }
 $(document).ready(function(){
-    re= /exec|count|'|"|=|;|>|<|%/i;
+    re= /exec|count|=|;|>|</i;
     $('#addNewCommentPop').popover('destroy');
     $("#confirmSubmit").click(function(){
 
@@ -68,7 +68,7 @@ $(document).ready(function(){
             return;
         }
         if (re.test(comment_content)){
-            $('#addNewCommentPop').popover({title: "Woops!", content: "The unexamined input is not worth submitting."});
+            $('#addNewCommentPop').popover({title: "Woops!", content: "unexamined(illegal) input is not worth submitting."});
             $('#addNewCommentPop').popover('show');
             $("#addNewComment").val("");
             return;

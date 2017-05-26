@@ -1,7 +1,6 @@
 # COMSM0104-MoiveGrail
-COMSM0104-WebTechnology_Porject
 
-- Please execuate `npm install` first
-- Then execuate `node index.js` in the root folder
-- Open Browser and type `localhost:3000`
-- Please click the bottom *about* link or type *localhost:3000/about* in address field to jump to our report page.
+- Please execute `npm install` command in the root directory, and the node modules will be installed automatically.
+- Then execute `node index.js` command in the root directory.
+- Open a browser (perfectly Chrome) and access `http://localhost:3000`.
+- Please click  [About Us](http://localhost:3000/about) link at the bottom or access `http://localhost:3000/about` directly to see the detail about this website.

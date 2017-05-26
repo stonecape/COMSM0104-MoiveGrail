@@ -219,3 +219,7 @@ body {
     color: #f39c12;
 }
 
+.about_link{
+    color: #2473ad;
+    text-decoration: none !important;
+}
