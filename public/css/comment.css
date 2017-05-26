@@ -103,7 +103,7 @@
     margin-left: 50px;
 }
 
- .pb-cmnt-container {
+.pb-cmnt-container {
      font-family: Lato;
      margin-top: 10px;
  }
@@ -138,4 +138,8 @@
 }
 .nomargintop_h3{
     margin-top: 0px
+}
+
+.with_background {
+    background-image: url(/images/mdetail-info-bg.svg);
 }

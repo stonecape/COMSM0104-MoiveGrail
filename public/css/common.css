@@ -1,70 +1,3 @@
-.carousel-inner .item img {
-  min-width: auto;
-  height: 500px;
-  max-width: initial;
-  opacity: 0.5;
-}
-
-.big-title{
-  position: absolute;
-  top: 190px;
-  width: 60%;
-  margin: 0 20% 0 20%;
-  color: white;
-  font-family: 'Homemade Apple', cursive;
-}
-.big-title h1{
-  text-align: center;
-}
-
-.search input{
-  color: #585858;
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 30px;
-  height: 47px;
-  font-style: italic;
-}
-
-.carousel .item{
-  background-color: #000;
-}
-
-.search button{
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  border: none;
-  border-radius: 30px;
-  background-color: transparent;
-  color: white;
-  z-index: 0;
-  height: 100%;
-  font-size: 20px;
-  width: 47px;
-  height: 47px;
-
-  background-color: #69b99f;
-}
-
-.search button::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-.search button:hover{
-  color: #fff;
-  background-color: #48987e;
-}
-
-.search button span{
-  top: 3px;
-}
-
 .btn-primary {
   background-color: #69b99f;
   border-color: #69b99f;
@@ -90,7 +23,6 @@
   border-color: #48987e;
 }
 
-
 .search-top-button{
   position: absolute;
   left: 4px;
@@ -101,43 +33,12 @@
   z-index: 0;
 }
 
+
 .form-group{
   position: relative;
 }
+
 .form-group input{
   padding-left: 30px;
 }
 
-.search{
-  position: absolute;
-  top: 300px;
-  width: 20%;
-  margin: 0 40% 0 40%;
-
-}
-
-.home_movielist {
-  font-family: 'Philosopher', sans-serif;
-}
-
-.home_movielist p{
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient: vertical;
-}
-
-.home_movielist h2{
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  overflow:hidden;
-}
-
-.sort_select {
-  width: initial;
-}
-
-.with_background {
-  background-image: url(/images/mdetail-info-bg.svg);
-}
