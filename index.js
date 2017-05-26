@@ -37,6 +37,7 @@ app.use(function (req, res, next) {
 var routes_index = require('./routes/index.js')(app);
 var routes_mdetail = require('./routes/mdetail.js')(app);
 var routes_signopt = require('./routes/signopt.js')(app);
+var routes_about = require('./routes/about.js')(app);
 
 
 // handle 404

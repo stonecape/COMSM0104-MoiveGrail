@@ -18,7 +18,7 @@
     "dateformat": "^2.0.0",
     "crypto": "^0.0.3",
     "valid-url":"^1.0.9",
-    "express-session":"^1.15.3"
-
+    "express-session":"^1.15.3",
+    "marked":"^0.3.6"
   }
 }
