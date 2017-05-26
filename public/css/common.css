@@ -138,3 +138,6 @@
   width: initial;
 }
 
+.with_background {
+  background-image: url(/images/mdetail-info-bg.svg);
+}

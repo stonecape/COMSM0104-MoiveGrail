@@ -1,19 +1,4 @@
-<script type="text/javascript">
-    function sortChange() {
-        var sort_opt = $("#sortSelect").val();
-        window.location.href = "?sort_opt=" + sort_opt;
-    }
-
-    $(function () {
-
-        $("#carousel-search-box").bind('keypress', function (event) {
-            if (event.keyCode == "13") {
-                doSearch('carousel');
-            }
-        });
-    });
-
-</script>
+<script src="/js/mg/home.js"></script>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">

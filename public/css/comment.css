@@ -128,3 +128,14 @@
     font-family: 'Philosopher', sans-serif;
 }
 
+.movie_title {
+    font-size: xx-large;
+    margin-bottom: 20px;
+}
+
+.movie_poster {
+    height: 300px;
+}
+.nomargintop_h3{
+    margin-top: 0px
+}

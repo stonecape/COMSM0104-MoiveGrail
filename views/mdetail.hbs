@@ -1,121 +1,22 @@
 <link href="/css/comment.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-<script src="/js/heart.js"></script>
-<script type="text/javascript">
-    function likeComment(comment_id) {
-        var res;
-        $.ajax({
-            type: "GET",
-            url : "/mdetail/likecomment",
-            dataType: 'json',
-            async : false,
-            data : {"comment_id":comment_id},
-            success: function(data) {
-                res = data;
-            }
-        });
-        if(res.result) {
-            location.reload();
-        }
-    }
-    function dislikeComment(comment_id) {
-        var res;
-        $.ajax({
-            type: "GET",
-            url : "/mdetail/dislikecomment",
-            dataType: 'json',
-            async : false,
-            data : {"comment_id":comment_id},
-            success: function(data) {
-                res = data;
-            }
-        });
-        if(res.result) {
-            location.reload();
-        }
-    }
-    function checkIsLogin() {
-        $('#addNewCommentPop').popover('destroy');
-        var isLoginResult;
-        $.ajax({
-            type: "GET",
-            url : "/login/checkIsLogin",
-            dataType: 'text',
-            async : false,
-            success: function(data) {
-                isLoginResult = data;
-            }
-        });
-        if(isLoginResult === "false") {
-            $('#addNewCommentPop').popover({title: "Woops!", content: "Please Log In First."});
-            $('#addNewCommentPop').popover('show');
-            return false;
-        }
-        return true;
-    }
-    $(document).ready(function(){
-        $('#addNewCommentPop').popover('destroy');
-        $("#confirmSubmit").click(function(){
+<script src="/js/mg/heart.js"></script>
+<script src="js/mg/mdetail.js"></script>
 
-            if(!checkIsLogin()) {
-                return;
-            }
-
-            var comment_content = $("#addNewComment").val();
-            if(comment_content.length < 1) {
-                $('#addNewCommentPop').popover({title: "Woops!", content: "Write your ideas and submit again."});
-                $('#addNewCommentPop').popover('show');
-                return;
-            }
-            var isAnonymous;
-            if($("#isAnonymous").is(':checked')) {
-                isAnonymous = 1;
-            } else {
-                isAnonymous = 0;
-            }
-            var movie_id = $("#movie_id").val();
-            var rank = $("#count").text();
-            if(rank < 1) {
-                $('#addNewCommentPop').popover({title: "Woops!", content: "Don't forget to rank this movie, please."});
-                $('#addNewCommentPop').popover('show');
-                return;
-            }
-
-            var sresult;
-            $.ajax({
-                type: "POST",
-                url : "/mdetail/addcomment",
-                dataType: 'json',
-                async : false,
-                data:{"isAnonymous":isAnonymous, "movie_id":movie_id, "comment_content":comment_content, "rank":rank},
-                success: function(data) {
-                    sresult = data;
-                }
-            });
-            if(sresult.result === true) {
-                location.reload();
-            } else {
-                $('#addNewCommentPop').popover({title: "Woops!", content: sresult.detail});
-                $('#addNewCommentPop').popover('show');
-            }
-
-        });
-    });
-</script>
 <div class="container">
     <hr>
     <hr>
-    <div class="row row-offcanvas row-offcanvas-right mdetail-info">
+    <div class="row row-offcanvas row-offcanvas-right with_background">
         <div class="col-xs-12 col-sm-9">
 
-            <h3 style="font-size: xx-large;margin-bottom: 20px;">{{movie_data.title}} ({{movie_data.year}})</h3>
+            <h3 class="movie_title">{{movie_data.title}} ({{movie_data.year}})</h3>
             <div id="mdetail-info" class="row">
 
                 <div class="col-xs-6 col-lg-4">
-                    <img style="height: 300px;" src="/images/movie_poster/{{movie_data.id}}.png" class="img-responsive" alt="poster">
+                    <img class="movie_poster" src="/images/movie_poster/{{movie_data.id}}.png" class="img-responsive" alt="poster">
                 </div><!--/.col-xs-6.col-lg-4-->
                 <div class="col-xs-6 col-lg-4">
-                    <h3 style="margin-top: 0px">Introduction</h3>
+                    <h3 class="nomargintop_h3">Introduction</h3>
                     <p>{{movie_data.introduction}}</p>
                     <p><strong>Director: </strong>{{movie_data.director}}</p>
                     <p><strong>Writers: </strong>{{movie_data.writers}}</p>
@@ -123,7 +24,7 @@
 
                 </div><!--/.col-xs-6.col-lg-4-->
                 <div class="col-xs-6 col-lg-4">
-                    <h3 style="margin-top: 0px">MovieGrail Score</h3>
+                    <h3 class="nomargintop_h3">MovieGrail Score</h3>
                     <p>{{avgrank.avg_rank}}</p>
                     <span id="infoHearts" >
                     {{#times avgrank 0}}
