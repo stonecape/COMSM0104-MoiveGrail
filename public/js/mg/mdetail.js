@@ -53,6 +53,7 @@ function checkIsLogin() {
     return true;
 }
 $(document).ready(function(){
+    re= /exec|count|'|"|=|;|>|<|%/i;
     $('#addNewCommentPop').popover('destroy');
     $("#confirmSubmit").click(function(){
 
@@ -64,6 +65,12 @@ $(document).ready(function(){
         if(comment_content.length < 1) {
             $('#addNewCommentPop').popover({title: "Woops!", content: "Write your ideas and submit again."});
             $('#addNewCommentPop').popover('show');
+            return;
+        }
+        if (re.test(comment_content)){
+            $('#addNewCommentPop').popover({title: "Woops!", content: "The unexamined input is not worth submitting."});
+            $('#addNewCommentPop').popover('show');
+            $("#addNewComment").val("");
             return;
         }
         var isAnonymous;

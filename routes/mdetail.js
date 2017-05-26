@@ -10,13 +10,13 @@ module.exports = function (app) {
         if (isEmptyObject(movie_id)) {
             res.render('home');
         } else {
+            var mdetail_query_stmt = db.prepare("SELECT movie_id AS id, introduction AS intro, year, title, director, " +
+                "writers,stars from movie_detail where movie_id = $movie_id");
 
-            var select_mdetail_query = "SELECT movie_id AS id, introduction AS intro, year, title, director, " +
-                "writers,stars from movie_detail where movie_id = ";
-            select_mdetail_query = select_mdetail_query.concat(movie_id);
-            console.log("select_mdetail_query->", select_mdetail_query);
+            /*select_mdetail_query = select_mdetail_query.concat(movie_id);
+            console.log("select_mdetail_query->", select_mdetail_query);*/
 
-            db.get(select_mdetail_query, function (err, row) {
+            mdetail_query_stmt.get({$movie_id:movie_id}, function (err, row) {
                 var mdetail_result = {};
                 if (!err && row) {
                     console.log(JSON.stringify(row));
@@ -29,15 +29,20 @@ module.exports = function (app) {
                     mdetail_result['stars'] = row.stars;
 
 
-                    var select_comment_query = "SELECT movie_comment.comment_id, movie_comment.user_id," +
+                    var comment_query_stmt = db.prepare("SELECT movie_comment.comment_id, movie_comment.user_id," +
                         "movie_comment.comment_con, movie_comment.like_num, movie_comment.dislike_num, " +
                         "movie_comment.rank, movie_comment.is_anonymous," +
                         "user_info.username from movie_comment  INNER JOIN user_info ON " +
-                        "movie_comment.user_id=user_info.user_id where movie_id = ";
-                    select_comment_query = select_comment_query.concat(movie_id).concat(" ORDER BY comment_id desc");
-                    console.log("select_comment_query->", select_comment_query);
+                        "movie_comment.user_id=user_info.user_id where movie_id = $movie_id ORDER BY comment_id desc");
+                    /*var select_comment_query = "SELECT movie_comment.comment_id, movie_comment.user_id," +
+                        "movie_comment.comment_con, movie_comment.like_num, movie_comment.dislike_num, " +
+                        "movie_comment.rank, movie_comment.is_anonymous," +
+                        "user_info.username from movie_comment  INNER JOIN user_info ON " +
+                        "movie_comment.user_id=user_info.user_id where movie_id = ";*/
+                    /*select_comment_query = select_comment_query.concat(movie_id).concat(" ORDER BY comment_id desc");
+                    console.log("select_comment_query->", select_comment_query);*/
 
-                    db.all(select_comment_query, function (err, qres) {
+                    comment_query_stmt.all({$movie_id:movie_id}, function (err, qres) {
                         /*console.log("qres->", qres);
                         console.log("mdetail_result->", JSON.stringify(mdetail_result));*/
                         var stmt = db.prepare("SELECT avg(rank) AS avg_rank FROM movie_comment WHERE movie_id = '"+movie_id+"'");
@@ -94,12 +99,12 @@ module.exports = function (app) {
 
     app.post('/mdetail/addcomment', urlencodedParser, function (req, res) {
         console.log(req.body);
-        if (req.cookies.username) {
+        if (req.session.username) {
             var isAnonymous = req.body.isAnonymous;
             var movie_id = req.body.movie_id;
             var comment_content = req.body.comment_content;
             var rank = req.body.rank;
-            var userid = req.cookies.userid;
+            var userid = req.session.userid;
 
             db.run("INSERT INTO movie_comment(user_id, is_anonymous,movie_id,comment_con,rank) VALUES (?,?,?,?,?)",
                 userid, isAnonymous, movie_id, comment_content, rank, function (err) {

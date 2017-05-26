@@ -37,9 +37,10 @@ module.exports = function (app) {
     });
 
     app.get('/search', urlencodedParser, function (req, res) {
+
         var search_text = req.query.search_text.trim();
-        var stmt = db.prepare("SELECT movie_id FROM movie_detail WHERE title LIKE '%"+search_text+"%'");
-        stmt.get(function(err,row){
+        var stmt = db.prepare("SELECT movie_id FROM movie_detail WHERE title LIKE $search_text");
+        stmt.get({$search_text:"%"+search_text+"%"},function(err,row){
            if(err) {
                 console.log("database err->",err);
                 res.send(JSON.stringify({result: false, detail: "database error"}));
